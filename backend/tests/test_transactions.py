@@ -76,3 +76,6 @@ def test_month_and_type_filters(client):
 
     assert len(june_expenses) == 1
     assert len(july_income) == 1
+
+    full_year = client.get("/api/v1/transactions?year=2026").json()
+    assert len(full_year) == 2

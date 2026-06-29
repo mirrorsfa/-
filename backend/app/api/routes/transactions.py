@@ -21,7 +21,7 @@ router = APIRouter(prefix="/transactions", tags=["transactions"])
 def list_transactions(
     session: DatabaseSession,
     year: int = Query(ge=2000, le=2100),
-    month: int = Query(ge=1, le=12),
+    month: int | None = Query(default=None, ge=1, le=12),
     search: str | None = Query(default=None, max_length=100),
     transaction_type: TransactionType | None = None,
     limit: int = Query(default=100, ge=1, le=500),

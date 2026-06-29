@@ -68,6 +68,48 @@ try {
   assert('刷新后流水仍从本地存储恢复', reloadedSummary.income === 500);
   assert('刷新后预算仍从本地存储恢复', getBudgetStatus(reloadedStore.getState()).budget === 1000);
 
+  const remoteStorage = createMemoryStorage();
+  const gatewayCalls = [];
+  const gateway = {
+    health: async () => ({ status: 'ok' }),
+    listTransactions: async year => {
+      gatewayCalls.push(['list', year]);
+      return [{
+        id: 'remote-1', name: '云端早餐', category: '餐饮', account: '微信支付',
+        date: '2026-06-29T08:00:00', amount: -20, icon: '🍜', color: '#fae5dd'
+      }];
+    },
+    getBudget: async period => {
+      gatewayCalls.push(['getBudget', period]);
+      return 2000;
+    },
+    createTransaction: async item => ({ ...item, id: 'remote-2' }),
+    updateTransaction: async (id, item) => ({ ...item, id }),
+    removeTransaction: async id => gatewayCalls.push(['remove', id]),
+    setBudget: async (period, amount) => {
+      gatewayCalls.push(['setBudget', period, amount]);
+      return amount;
+    }
+  };
+  const remoteStore = createLedgerStore({
+    storage: createStorage(remoteStorage),
+    seedData: { transactions: [], budgets: {} },
+    initialMonth: new Date(2026, 5, 1),
+    gateway
+  });
+  await remoteStore.initialize();
+  assert('连接成功后切换为云端数据源', remoteStore.getState().dataSource === 'remote');
+  assert('初始化会从后端加载年度流水', remoteStore.getState().transactions[0].id === 'remote-1');
+  assert('初始化会同步当前月预算', getBudgetStatus(remoteStore.getState()).budget === 2000);
+
+  await remoteStore.addTransaction({
+    name: '云端午餐', category: '餐饮', account: '现金',
+    date: '2026-06-29T12:00:00', amount: -35, icon: '🍜', color: '#fae5dd'
+  });
+  assert('新增流水使用后端返回的标识', remoteStore.getState().transactions[0].id === 'remote-2');
+  await remoteStore.setBudget(3000);
+  assert('修改预算会写入远程网关', gatewayCalls.some(call => call[0] === 'setBudget'));
+
   const result = document.querySelector('#testResult');
   result.dataset.status = 'passed';
   result.textContent = `${results.join('\n')}\n\n${results.length} 项测试全部通过`;

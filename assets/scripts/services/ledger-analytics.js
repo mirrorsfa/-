@@ -106,7 +106,7 @@ export function getTrend(state) {
       expense: matching.filter(item => item.amount < 0).reduce((sum, item) => sum + Math.abs(item.amount), 0)
     };
   });
-  const maximum = Math.max(1, ...buckets.flatMap(item => [item.income, item.expense]));
+  const maximum = Math.max(0, ...buckets.flatMap(item => [item.income, item.expense]));
   return { buckets, maximum };
 }
 

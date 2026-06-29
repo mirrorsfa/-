@@ -5,6 +5,7 @@ def test_health_check(client):
     assert response.json() == {
         "status": "ok",
         "service": "today-ledger-api",
+        "database": "ready",
     }
 
 

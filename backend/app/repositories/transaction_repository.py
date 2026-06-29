@@ -18,13 +18,16 @@ class TransactionRepository:
         self,
         *,
         year: int,
-        month: int,
+        month: int | None = None,
         search: str | None = None,
         transaction_type: TransactionType | None = None,
         limit: int = 100,
         offset: int = 0,
     ) -> list[Transaction]:
-        start, end = period_bounds(year, month)
+        if month is None:
+            start, end = period_bounds(year, 1)[0], period_bounds(year, 12)[1]
+        else:
+            start, end = period_bounds(year, month)
         statement: Select[tuple[Transaction]] = (
             select(Transaction)
             .where(Transaction.occurred_at >= start, Transaction.occurred_at < end)

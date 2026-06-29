@@ -112,7 +112,7 @@ export function createEntryDialog({ store, showToast }) {
     selectedCategory = button.dataset.category;
     renderType();
   });
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     const draft = getTransactionDraft();
     if (!draft) {
@@ -120,16 +120,30 @@ export function createEntryDialog({ store, showToast }) {
       showToast('先写下正确的金额吧');
       return;
     }
-    if (editingId) store.updateTransaction(editingId, draft);
-    else store.addTransaction(draft);
-    dialog.close();
-    showToast(editingId ? '这笔记录已更新' : '已保存，认真生活的证据 +1');
+    saveButton.disabled = true;
+    try {
+      if (editingId) await store.updateTransaction(editingId, draft);
+      else await store.addTransaction(draft);
+      dialog.close();
+      showToast(editingId ? '这笔记录已更新' : '已保存，认真生活的证据 +1');
+    } catch (error) {
+      showToast(error.message);
+    } finally {
+      saveButton.disabled = false;
+    }
   });
-  deleteButton.addEventListener('click', () => {
+  deleteButton.addEventListener('click', async () => {
     if (!editingId || !window.confirm('确定删除这笔记录吗？')) return;
-    store.removeTransaction(editingId);
-    dialog.close();
-    showToast('这笔记录已删除');
+    deleteButton.disabled = true;
+    try {
+      await store.removeTransaction(editingId);
+      dialog.close();
+      showToast('这笔记录已删除');
+    } catch (error) {
+      showToast(error.message);
+    } finally {
+      deleteButton.disabled = false;
+    }
   });
   dialog.addEventListener('click', event => {
     if (event.target === dialog) dialog.close();

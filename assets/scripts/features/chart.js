@@ -17,6 +17,7 @@ export function createChart(store) {
 
   function render(state) {
     const { buckets, maximum } = getTrend(state);
+    const scaleMaximum = Math.max(maximum, 1);
 
     rangeButtons.forEach(button => {
       button.classList.toggle('active', button.dataset.range === state.chartRange);
@@ -28,8 +29,8 @@ export function createChart(store) {
 
     chart.innerHTML = buckets.map((item, index) => `
       <div class="chart-day ${index === buckets.length - 1 ? 'today' : ''}">
-        <i style="height:${item.income / maximum * 100}%" title="收入 ${item.income}"></i>
-        <i style="height:${item.expense / maximum * 100}%" title="支出 ${item.expense}"></i>
+        <i style="height:${item.income / scaleMaximum * 100}%" title="收入 ${item.income}"></i>
+        <i style="height:${item.expense / scaleMaximum * 100}%" title="支出 ${item.expense}"></i>
         <span>${item.label}</span>
       </div>
     `).join('');
