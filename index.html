@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="今日记账——看见每一笔，也看见生活。">
+  <title>今日记账 · 生活收支总览</title>
+  <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2Z"/><path d="M9 8h6M9 12h6"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 5h15a2 2 0 0 1 2 2v13H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M16 11h5v5h-5a2.5 2.5 0 0 1 0-5ZM5 5V3h12"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="今日记账首页">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>今日记账</span>
+      </a>
+
+      <nav class="main-nav" aria-label="主要导航">
+        <a class="nav-item active" href="#overview" data-page="总览"><svg><use href="#i-home"/></svg><span>总览</span></a>
+        <a class="nav-item" href="#transactions" data-page="全部流水"><svg><use href="#i-receipt"/></svg><span>全部流水</span></a>
+        <a class="nav-item" href="#reports" data-page="收支统计"><svg><use href="#i-chart"/></svg><span>收支统计</span></a>
+        <a class="nav-item" href="#budget" data-page="预算管理"><svg><use href="#i-wallet"/></svg><span>预算管理</span></a>
+        <a class="nav-item" href="#accounts" data-page="我的账户"><svg><use href="#i-card"/></svg><span>我的账户</span></a>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-art"><span>¥</span></div>
+        <strong>本月预算还剩</strong>
+        <b id="sideBudget">¥ 3,860.00</b>
+        <div class="mini-progress"><i style="width: 61%"></i></div>
+        <small>保持得不错，再接再厉</small>
+      </div>
+
+      <div class="profile">
+        <div class="avatar">林</div>
+        <div><strong>林小满</strong><small>自在生活家</small></div>
+        <button class="icon-button" aria-label="打开个人设置">•••</button>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="todayText">星期一，6月29日</p>
+          <h1>下午好，今天过得怎么样？</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search-box">
+            <svg><use href="#i-search"/></svg>
+            <input id="searchInput" type="search" placeholder="搜索最近账单" aria-label="搜索最近账单">
+          </label>
+          <button class="primary-button" id="addTransaction"><svg><use href="#i-plus"/></svg>记一笔</button>
+        </div>
+      </header>
+
+      <section class="month-switcher" aria-label="月份切换">
+        <button class="round-button" id="prevMonth" aria-label="上个月">‹</button>
+        <button class="month-label" id="monthLabel">2026年 6月 <span>⌄</span></button>
+        <button class="round-button" id="nextMonth" aria-label="下个月">›</button>
+        <span class="month-note">本月已记账 18 天</span>
+      </section>
+
+      <section class="summary-grid" aria-label="本月收支摘要">
+        <article class="balance-card">
+          <div class="card-heading">
+            <span>本月结余</span>
+            <button class="eye-button" id="toggleMoney" aria-label="隐藏金额"><svg><use href="#i-eye"/></svg></button>
+          </div>
+          <div class="balance-line">
+            <strong class="money-value" id="balanceValue" data-value="9434.50">¥ 9,434.50</strong>
+            <span class="trend-badge">↑ 12.5%</span>
+          </div>
+          <p>比上月多结余 ¥ 1,048.30</p>
+          <div class="balance-decoration"><i></i><i></i><i></i></div>
+        </article>
+
+        <article class="stat-card income-card">
+          <div class="stat-icon">↙</div>
+          <div>
+            <span>本月收入</span>
+            <strong class="money-value" id="incomeValue" data-value="16800">¥ 16,800.00</strong>
+            <small>共 3 笔收入</small>
+          </div>
+        </article>
+
+        <article class="stat-card expense-card">
+          <div class="stat-icon">↗</div>
+          <div>
+            <span>本月支出</span>
+            <strong class="money-value" id="expenseValue" data-value="7365.5">¥ 7,365.50</strong>
+            <small>日均支出 ¥ 245.52</small>
+          </div>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="panel trend-panel">
+          <div class="panel-header">
+            <div><h2>收支趋势</h2><p>清楚看见钱都去了哪里</p></div>
+            <div class="segmented" role="group" aria-label="趋势周期">
+              <button class="active" data-range="week">近7天</button>
+              <button data-range="month">本月</button>
+              <button data-range="year">全年</button>
+            </div>
+          </div>
+          <div class="legend"><span><i class="income-dot"></i>收入</span><span><i class="expense-dot"></i>支出</span></div>
+          <div class="chart-wrap">
+            <div class="chart-y"><span>2,000</span><span>1,500</span><span>1,000</span><span>500</span><span>0</span></div>
+            <div class="bar-chart" id="barChart" aria-label="近7天收支柱状图"></div>
+          </div>
+        </article>
+
+        <article class="panel category-panel">
+          <div class="panel-header">
+            <div><h2>支出分类</h2><p>本月共支出 ¥ 7,365.50</p></div>
+            <button class="text-button">详情 <svg><use href="#i-chevron"/></svg></button>
+          </div>
+          <div class="category-content">
+            <div class="donut" role="img" aria-label="支出分类环形图">
+              <div><span>最大支出</span><strong>餐饮</strong><b>32%</b></div>
+            </div>
+            <div class="category-list">
+              <div><i style="--color:#ee8468"></i><span>餐饮</span><strong>¥ 2,356</strong><small>32%</small></div>
+              <div><i style="--color:#476d63"></i><span>居住</span><strong>¥ 1,768</strong><small>24%</small></div>
+              <div><i style="--color:#eebd65"></i><span>交通</span><strong>¥ 1,105</strong><small>15%</small></div>
+              <div><i style="--color:#95aaa2"></i><span>其他</span><strong>¥ 2,136</strong><small>29%</small></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel transactions-panel" id="transactions">
+          <div class="panel-header">
+            <div><h2>最近流水</h2><p id="transactionHint">今天有 4 笔新记录</p></div>
+            <button class="text-button">查看全部 <svg><use href="#i-chevron"/></svg></button>
+          </div>
+          <div class="transaction-list" id="transactionList"></div>
+          <div class="empty-state" id="emptyState" hidden>没有找到相关账单，换个词试试。</div>
+        </article>
+
+        <article class="panel budget-panel" id="budget">
+          <div class="panel-header">
+            <div><h2>预算进度</h2><p>合理安排，花得更安心</p></div>
+            <button class="round-button small" aria-label="预算设置">•••</button>
+          </div>
+          <div class="budget-main">
+            <div><span>本月总预算</span><strong class="money-value" data-value="10000">¥ 10,000</strong></div>
+            <div class="budget-numbers"><span>已用 <b>¥ 6,140</b></span><span>剩余 <b>¥ 3,860</b></span></div>
+            <div class="budget-track"><i style="width:61.4%"></i></div>
+            <small>已使用 61.4%，本月还剩 2 天</small>
+          </div>
+          <div class="budget-tip"><span>💡</span><p><strong>小建议</strong>本月外卖支出比上月高 18%，明天不如自己做顿饭？</p></div>
+        </article>
+      </section>
+    </main>
+
+    <nav class="mobile-nav" aria-label="移动端导航">
+      <a class="active" href="#overview"><svg><use href="#i-home"/></svg><span>总览</span></a>
+      <a href="#transactions"><svg><use href="#i-receipt"/></svg><span>流水</span></a>
+      <button id="mobileAdd" aria-label="记一笔"><svg><use href="#i-plus"/></svg></button>
+      <a href="#reports"><svg><use href="#i-chart"/></svg><span>统计</span></a>
+      <a href="#budget"><svg><use href="#i-wallet"/></svg><span>预算</span></a>
+    </nav>
+  </div>
+
+  <dialog class="transaction-dialog" id="transactionDialog">
+    <form method="dialog" id="transactionForm">
+      <div class="dialog-header">
+        <div><span>QUICK ENTRY</span><h2>记下这一笔</h2></div>
+        <button class="icon-button close-dialog" type="button" aria-label="关闭"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <div class="type-switch" role="group" aria-label="收支类型">
+        <button type="button" class="active" data-type="expense">支出</button>
+        <button type="button" data-type="income">收入</button>
+      </div>
+      <label class="amount-field"><span>金额</span><div><b>¥</b><input id="amountInput" inputmode="decimal" placeholder="0.00" required></div></label>
+      <fieldset class="category-field">
+        <legend>选择分类</legend>
+        <div class="category-options">
+          <button type="button" class="active" data-category="餐饮">🍜<span>餐饮</span></button>
+          <button type="button" data-category="交通">🚕<span>交通</span></button>
+          <button type="button" data-category="购物">🛍️<span>购物</span></button>
+          <button type="button" data-category="娱乐">🎬<span>娱乐</span></button>
+          <button type="button" data-category="居住">🏠<span>居住</span></button>
+        </div>
+      </fieldset>
+      <label class="note-field"><span>备注</span><input id="noteInput" maxlength="30" placeholder="这笔钱花在了……"></label>
+      <button class="save-button" type="submit">保存记录</button>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status">已保存，认真生活的证据 +1</div>
+
+  <script type="module" src="assets/scripts/app.js"></script>
+</body>
+</html>

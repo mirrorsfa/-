@@ -1,0 +1,78 @@
+.search-box {
+  width: min(230px, 20vw);
+  height: 42px;
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .65);
+}
+
+.search-box:focus-within { border-color: #a5bbb3; background: white; box-shadow: 0 0 0 3px rgba(47, 102, 88, .08); }
+.search-box svg { width: 17px; height: 17px; fill: none; stroke: var(--muted); stroke-width: 1.8; }
+.search-box input { min-width: 0; width: 100%; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 12px; }
+.search-box input::placeholder { color: #adb7b3; }
+
+.primary-button,
+.save-button {
+  height: 42px;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  background: var(--green);
+  box-shadow: 0 8px 20px rgba(47, 102, 88, .16);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: .2s ease;
+}
+
+.primary-button:hover,
+.save-button:hover { background: var(--green-dark); transform: translateY(-1px); }
+.primary-button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
+.round-button { width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 50%; background: rgba(255, 255, 255, .6); cursor: pointer; font-size: 20px; line-height: 1; }
+.round-button:hover { background: white; }
+.round-button.small { width: 30px; height: 30px; border: 0; color: var(--muted); background: #f3f4ef; font-size: 12px; }
+.month-label { padding: 0 4px; border: 0; background: none; cursor: pointer; font-size: 13px; font-weight: 600; }
+.month-label span { margin-left: 4px; color: var(--muted); }
+.text-button { padding: 5px 0; display: flex; align-items: center; gap: 1px; border: 0; color: var(--green); background: none; cursor: pointer; font-size: 10px; font-weight: 600; }
+.text-button svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+.transaction-dialog { width: min(480px, calc(100vw - 28px)); padding: 0; border: 0; border-radius: 24px; color: var(--ink); background: var(--paper); box-shadow: 0 30px 90px rgba(16, 45, 37, .26); }
+.transaction-dialog::backdrop { background: rgba(20, 47, 40, .4); backdrop-filter: blur(3px); }
+.transaction-dialog[open] { animation: dialog-in .22s ease-out; }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+.transaction-dialog form { padding: 27px; }
+.dialog-header { display: flex; align-items: flex-start; justify-content: space-between; }
+.dialog-header span { color: var(--orange); font-size: 9px; font-weight: 700; letter-spacing: 1.7px; }
+.dialog-header h2 { margin: 5px 0 0; font-size: 23px; }
+.close-dialog { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #f0f1ed; }
+.close-dialog svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.type-switch { margin-top: 22px; padding: 4px; display: grid; grid-template-columns: 1fr 1fr; border-radius: 12px; background: #f0f1ed; }
+.type-switch button { height: 36px; border: 0; border-radius: 9px; color: var(--muted); background: none; cursor: pointer; font-size: 12px; }
+.type-switch button.active { color: white; background: var(--green); box-shadow: 0 4px 12px rgba(47, 102, 88, .18); }
+.amount-field,
+.note-field { display: block; margin-top: 21px; }
+.amount-field > span,
+.note-field > span,
+.category-field legend { color: var(--muted); font-size: 10px; }
+.amount-field > div { margin-top: 6px; display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+.amount-field b { font-size: 24px; }
+.amount-field input { width: 100%; padding: 5px 10px 9px; border: 0; outline: 0; color: var(--ink); background: none; font-size: 34px; font-weight: 700; }
+.category-field { margin: 21px 0 0; padding: 0; border: 0; }
+.category-options { margin-top: 10px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+.category-options button { padding: 9px 3px 7px; display: grid; place-items: center; gap: 4px; border: 1px solid var(--line); border-radius: 11px; background: white; cursor: pointer; font-size: 17px; }
+.category-options button span { font-size: 9px; }
+.category-options button.active { border-color: var(--green); color: var(--green); background: var(--green-soft); }
+.note-field input { width: 100%; margin-top: 7px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 11px; outline: 0; background: white; font-size: 11px; }
+.note-field input:focus { border-color: #a5bbb3; }
+.save-button { width: 100%; height: 46px; margin-top: 22px; }
+.toast { position: fixed; left: 50%; bottom: 26px; z-index: 50; padding: 11px 17px; border-radius: 12px; color: white; background: #1e443a; box-shadow: 0 12px 35px rgba(20, 50, 42, .25); font-size: 11px; opacity: 0; pointer-events: none; transform: translate(-50%, 12px); transition: .25s ease; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }

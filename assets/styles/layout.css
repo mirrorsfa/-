@@ -1,0 +1,52 @@
+.app-shell { min-height: 100vh; }
+
+.main-content {
+  margin-left: 236px;
+  padding: 30px clamp(26px, 3.5vw, 58px) 54px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.month-switcher {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 30px 0 18px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr 1fr;
+  gap: 16px;
+}
+
+.dashboard-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1.36fr 1fr;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+.month-note {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
