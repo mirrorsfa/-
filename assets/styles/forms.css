@@ -10,6 +10,21 @@
   background: rgba(255, 255, 255, .65);
 }
 
+.connection-status {
+  padding: 7px 10px;
+  border-radius: 20px;
+  color: var(--muted);
+  background: #ecefe9;
+  white-space: nowrap;
+  font-size: 9px;
+  font-weight: 600;
+}
+.connection-status::before { content: ""; width: 6px; height: 6px; margin-right: 5px; display: inline-block; border-radius: 50%; background: currentColor; }
+.connection-status.online { color: #327361; background: #e0eee8; }
+.connection-status.syncing { color: #98701c; background: #fff0c9; }
+.connection-status.offline { color: #b95f49; background: #fae7e1; }
+.save-button:disabled { opacity: .6; cursor: wait; transform: none; }
+
 .search-box:focus-within { border-color: #a5bbb3; background: white; box-shadow: 0 0 0 3px rgba(47, 102, 88, .08); }
 .search-box svg { width: 17px; height: 17px; fill: none; stroke: var(--muted); stroke-width: 1.8; }
 .search-box input { min-width: 0; width: 100%; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 12px; }

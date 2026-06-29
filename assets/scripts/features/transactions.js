@@ -44,6 +44,9 @@ export function createTransactionList({ onEdit }) {
       </button>
     `).join('');
 
+    emptyState.textContent = searchInput.value
+      ? '没有找到相关账单，换个关键词试试。'
+      : '这个月还没有账单，点击“记一笔”开始记录。';
     emptyState.hidden = visibleTransactions.length > 0;
   }
 

@@ -1,13 +1,21 @@
 export function createMonthSelector({ store, showToast }) {
   const monthLabel = document.querySelector('#monthLabel');
 
-  document.querySelector('#prevMonth').addEventListener('click', () => {
-    store.changeMonth(-1);
-    showToast('已切换到上个月');
+  document.querySelector('#prevMonth').addEventListener('click', async () => {
+    try {
+      await store.changeMonth(-1);
+      showToast('已切换到上个月');
+    } catch (error) {
+      showToast(error.message);
+    }
   });
-  document.querySelector('#nextMonth').addEventListener('click', () => {
-    store.changeMonth(1);
-    showToast('已切换到下个月');
+  document.querySelector('#nextMonth').addEventListener('click', async () => {
+    try {
+      await store.changeMonth(1);
+      showToast('已切换到下个月');
+    } catch (error) {
+      showToast(error.message);
+    }
   });
 
   function render(state) {

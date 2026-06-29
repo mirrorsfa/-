@@ -17,6 +17,8 @@
   .topbar { align-items: flex-start; }
   .topbar h1 { max-width: 250px; }
   .search-box { display: none; }
+  .connection-status { max-width: 22px; padding: 7px; overflow: hidden; font-size: 0; }
+  .connection-status::before { margin: 0; }
   .primary-button { width: 42px; padding: 0; border-radius: 50%; font-size: 0; }
   .primary-button svg { width: 20px; height: 20px; }
   .month-switcher { margin-top: 25px; }

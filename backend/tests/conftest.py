@@ -25,7 +25,7 @@ def client():
         with testing_session() as session:
             yield session
 
-    app = create_app(initialize_database=False)
+    app = create_app()
     app.dependency_overrides[get_db] = override_get_db
 
     with TestClient(app) as test_client:

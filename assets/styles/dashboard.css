@@ -126,6 +126,7 @@
 .category-list strong { font-size: 9px; }
 .category-list small { width: 22px; text-align: right; color: var(--muted); font-size: 8px; }
 .category-empty { color: var(--muted); font-size: 10px; line-height: 1.7; }
+.category-list > .category-empty { display: block; }
 
 .transactions-panel { min-height: 334px; }
 .transaction-list { margin-top: 10px; }

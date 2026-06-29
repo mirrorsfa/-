@@ -23,16 +23,24 @@ export function createBudget({ store, showToast }) {
   dialog.addEventListener('click', event => {
     if (event.target === dialog) dialog.close();
   });
-  form.addEventListener('submit', event => {
+  form.addEventListener('submit', async event => {
     event.preventDefault();
     const amount = Number(input.value);
     if (!Number.isFinite(amount) || amount <= 0) {
       showToast('预算金额需要大于 0');
       return;
     }
-    store.setBudget(amount);
-    dialog.close();
-    showToast('本月预算已更新');
+    const submitButton = form.querySelector('[type="submit"]');
+    submitButton.disabled = true;
+    try {
+      await store.setBudget(amount);
+      dialog.close();
+      showToast('本月预算已更新');
+    } catch (error) {
+      showToast(error.message);
+    } finally {
+      submitButton.disabled = false;
+    }
   });
 
   function render(state) {
