@@ -52,3 +52,28 @@ python3 -m http.server 8080
 ```
 
 开发时遵循单一职责：业务模块不直接管理其他模块的数据，由 `app.js` 通过明确接口进行组合。
+
+## 后端 API
+
+后端位于 `backend/`，采用 FastAPI、SQLAlchemy 和 SQLite，并按 API、业务服务、数据仓库、模型、Schema 分层。
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+uvicorn backend.app.main:app --reload --port 8000
+```
+
+启动后可访问：
+
+- API 文档：`http://127.0.0.1:8000/docs`
+- 健康检查：`http://127.0.0.1:8000/api/v1/health`
+- 流水 API：`/api/v1/transactions`
+- 预算 API：`/api/v1/budgets/{YYYY-MM}`
+- 统计 API：`/api/v1/analytics/*`
+
+运行后端测试：
+
+```bash
+pytest
+```
